@@ -4,7 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.Cors" Version="5.3.0" />
@@ -22,14 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DB\" />
     <Folder Include="Models\" />
     <Folder Include="Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="DB\TiendaDB.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -62,7 +62,6 @@ namespace Examen.Repositories
         {
             var validationErrors = new List<string>();
 
-            // Validaciones en memoria
             if (string.IsNullOrEmpty(entity.Nombre))
             {
                 validationErrors.Add("El nombre no debe estar vacío.");
@@ -84,19 +83,22 @@ namespace Examen.Repositories
                 validationErrors.Add("El stock no puede ser negativo.");
             }
 
-            // Validaciones en base de datos
             var nombreExiste = await Context
                 .Set<Producto>()
                 .AnyAsync(p => p.Nombre == entity.Nombre && p.Id != entity.Id);
 
+            if (nombreExiste)
+            {
+                validationErrors.Add("El nombre del producto ya existe.");
+            }
+
             return (validationErrors.Count == 0, validationErrors);
         }
 
-        public bool IsValid(Producto entity, out List<string> validationErrors)
+        public async Task<(bool IsValid, List<string> ValidationErrors)> IsValid(Producto entity)
         {
-            var result = IsValidAsync(entity).Result; 
-            validationErrors = result.ValidationErrors; 
-            return result.IsValid;
+            return await IsValidAsync(entity);
         }
+
     }
 }
